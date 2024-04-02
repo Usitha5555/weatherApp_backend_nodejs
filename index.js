@@ -1,17 +1,18 @@
-const { default: mongoose } = require("mongoose")
+const { default: mongoose } = require("mongoose");
 
-const dbUrl = "mongodb+srv://Usitha:200045@cluster0.10qpzhi.mongodb.net/weatherApi"
+const dbUrl = "mongodb+srv://Usitha:200045@cluster0.10qpzhi.mongodb.net/weatherApi";
 
 const connectionParams = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}
+};
 
 const weatherSchema = new mongoose.Schema({
   district: String,
   humidity: Number,
   temperature: Number,
   pressure: Number,
+  weatherCondition: String,
 });
 
 const Weather = mongoose.model("Weather", weatherSchema);
@@ -44,20 +45,29 @@ const districts = [
   "Kalutara",
 ];
 
-// Generate and save weather data for each district
+// Function to generate weather data and save to MongoDB
 const generateWeatherData = async () => {
   try {
-    await mongoose.connect(dbUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(dbUrl, connectionParams);
 
     for (const district of districts) {
+      const humidity = Math.random() * 100;
+      const temperature = Math.random() * 40;
+      const pressure = Math.random() * 1000 + 900;
+
+      let weatherCondition;
+      if (temperature > 25 && humidity < 60 && pressure > 1000) {
+        weatherCondition = 'sunny';
+      } else {
+        weatherCondition = 'rainy';
+      }
+
       const weatherData = new Weather({
         district,
-        humidity: Math.random() * 100, // Generate random humidity between 0 and 100
-        temperature: Math.random() * 40, // Generate random temperature between 0 and 40
-        pressure: Math.random() * 1000 + 900, // Generate random pressure between 900 and 1900
+        humidity,
+        temperature,
+        pressure,
+        weatherCondition,
       });
 
       await weatherData.save();
@@ -71,7 +81,91 @@ const generateWeatherData = async () => {
     mongoose.disconnect();
   }
 };
+
 generateWeatherData();
+
+
+
+
+
+// const { default: mongoose } = require("mongoose")
+
+// const dbUrl = "mongodb+srv://Usitha:200045@cluster0.10qpzhi.mongodb.net/weatherApi"
+
+// const connectionParams = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }
+
+// const weatherSchema = new mongoose.Schema({
+//   district: String,
+//   humidity: Number,
+//   temperature: Number,
+//   pressure: Number,
+//   weatherCondition: String,
+// });
+
+// const Weather = mongoose.model("Weather", weatherSchema);
+
+// const districts = [
+//   "Batticaloa",
+//   "Anuradhapura",
+//   "Trincomalee",
+//   "Galle",
+//   "Mullaitivu",
+//   "Mannar",
+//   "Kegalle",
+//   "Matara",
+//   "Vavuniya",
+//   "Ratnapura",
+//   "Kandy",
+//   "Monaragala",
+//   "Jaffna",
+//   "Badulla",
+//   "Matale",
+//   "Nuwara Eliya",
+//   "Gampaha",
+//   "Kilinochchi",
+//   "Ampara",
+//   "Polonnaruwa",
+//   "Colombo",
+//   "Hambantota",
+//   "Kurunegala",
+//   "Puttalam",
+//   "Kalutara",
+// ];
+
+// // Generate and save weather data for each district
+// const generateWeatherData = async () => {
+//   try {
+//     await mongoose.connect(dbUrl, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+
+//     for (const district of districts) {
+//       const weatherData = new Weather({
+//         district,
+//         humidity: Math.random() * 100, // Generate random humidity between 0 and 100
+//         temperature: Math.random() * 40, // Generate random temperature between 0 and 40
+//         pressure: Math.random() * 1000 + 900, // Generate random pressure between 900 and 1900
+        
+
+
+//       });
+
+//       await weatherData.save();
+//       console.log(`Weather data saved for ${district}`);
+//     }
+
+//     console.log("All weather data saved successfully.");
+//   } catch (error) {
+//     console.error("Error saving weather data:", error);
+//   } finally {
+//     mongoose.disconnect();
+//   }
+// };
+// generateWeatherData();
 
 
 
