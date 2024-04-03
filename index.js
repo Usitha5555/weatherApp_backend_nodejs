@@ -1,4 +1,5 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
+const cron = require("node-cron");
 
 const dbUrl = "mongodb+srv://Usitha:200045@cluster0.10qpzhi.mongodb.net/weatherApi";
 
@@ -8,6 +9,7 @@ const connectionParams = {
 };
 
 const weatherSchema = new mongoose.Schema({
+  _id: Number,
   district: String,
   humidity: Number,
   temperature: Number,
@@ -50,7 +52,11 @@ const generateWeatherData = async () => {
   try {
     await mongoose.connect(dbUrl, connectionParams);
 
-    for (const district of districts) {
+    // Delete existing weather data
+    await Weather.deleteMany({});
+
+    for (let i = 1; i <= districts.length; i++) {
+      const district = districts[i - 1]; // Adjust index to start from 0
       const humidity = Math.random() * 100;
       const temperature = Math.random() * 40;
       const pressure = Math.random() * 1000 + 900;
@@ -63,6 +69,7 @@ const generateWeatherData = async () => {
       }
 
       const weatherData = new Weather({
+        _id: i, 
         district,
         humidity,
         temperature,
@@ -82,7 +89,11 @@ const generateWeatherData = async () => {
   }
 };
 
-generateWeatherData();
+// Schedule the generateWeatherData function to run every minute
+cron.schedule("* * * * *", generateWeatherData);
+
+
+
 
 
 
