@@ -16,6 +16,8 @@
     "mogodb": "^0.0.1-security",
     "mongoose": "^8.2.3",
     "node-cron": "^3.0.3",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }

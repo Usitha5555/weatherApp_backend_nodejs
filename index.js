@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const cron = require("node-cron");
+require("dotenv").config();
 
-const dbUrl = "mongodb+srv://Usitha:200045@cluster0.10qpzhi.mongodb.net/weatherApi";
+// const dbUrl = "mongodb+srv://Usitha:200045@cluster0.10qpzhi.mongodb.net/weatherApi";
 
-const connectionParams = {
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-};
+});
 
 const weatherSchema = new mongoose.Schema({
   
@@ -50,7 +51,7 @@ const districts = [
 // Function to generate weather data and save to MongoDB
 const generateWeatherData = async () => {
   try {
-    await mongoose.connect(dbUrl, connectionParams);
+    
 
     // Delete existing weather data
     // await Weather.deleteMany({});
@@ -89,9 +90,7 @@ const generateWeatherData = async () => {
     console.log("All weather data saved successfully.");
   } catch (error) {
     console.error("Error saving weather data:", error);
-  } finally {
-    mongoose.disconnect();
-  }
+  } 
 };
 
 // Schedule the generateWeatherData function to run every minute

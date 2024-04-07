@@ -2,7 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
-const Weather = require("./models/weather"); // Import the Weather model
+const Weather = require("./models/weather"); // Import the Weather modelconst swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swaggerConfig');
+const swaggerUi = require('swagger-ui-express');
+
 
 const app = express();
 const httpPort = 3030;
@@ -23,6 +26,7 @@ app.use(cors());
 const weatherRoutes = require("./routes/weatherRoutes");
 app.use("/weather", weatherRoutes);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 const httpServer = app.listen(httpPort, () => {
