@@ -10,7 +10,8 @@ deployed backend: https://weatherapp-backend-nodejs.onrender.com/weather
 
 swagger deployed:  https://weatherapp-backend-nodejs.onrender.com/api-docs
 swagger deployed fetch data: https://weatherapp-backend-nodejs.onrender.com/api-docs/#/Weather/get_weather
-![Screenshot 2024-04-08 091431](https://github.com/Usitha5555/weatherApp_backend_nodejs/assets/83726451/b2a8c00e-ab82-467c-aca5-e30497d5a559)
+![Screenshot 2024-04-08 094039](https://github.com/Usitha5555/weatherApp_backend_nodejs/assets/83726451/f2098a93-dcb5-47fe-8695-e4a52ca2f0e6)
+
 
 
 
