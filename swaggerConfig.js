@@ -10,12 +10,13 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3030', // Update with your server URL
+        // url: 'http://localhost:3030', 
+        url: 'https://weatherapp-backend-nodejs.onrender.com',
         description: 'Development server',
       },
     ],
   },
-  apis: ['./routes/*.js'], // Update with your route files directory
+  apis: ['./routes/*.js'], 
 };
 
 const swaggerSpec = swaggerJsdoc(options);
